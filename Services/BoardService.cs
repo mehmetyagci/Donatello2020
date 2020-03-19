@@ -1,4 +1,5 @@
-﻿using Donatello2020.ViewModels;
+﻿using Donatello2020.Infrastructure;
+using Donatello2020.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,20 +9,45 @@ namespace Donatello2020.Services
 {
     public class BoardService
     {
+        private readonly Donatello2020Context dbContext;
+        public BoardService(Donatello2020Context dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         public BoardList ListBoard()
         {
             var model = new BoardList();
 
-            var board = new BoardList.Board();
-            board.Title = "Mehmet's Board";
+            //var board = new BoardList.Board();
+            //board.Title = "Mehmet's Board";
 
-            model.Boards.Add(board);
+            //model.Boards.Add(board);
 
-            var anotherBoard = new BoardList.Board();
-            anotherBoard.Title = "Another Board";
+            //var anotherBoard = new BoardList.Board();
+            //anotherBoard.Title = "Another Board";
 
-            model.Boards.Add(anotherBoard);
+            //model.Boards.Add(anotherBoard);
+
+            foreach (var board in dbContext.Boards)
+            {
+                model.Boards.Add(new BoardList.Board
+                {
+                    Title = board.Title
+                });
+            }
             return model;
+        }
+
+        internal int AddBoard(NewBoard viewModel)
+        {
+            dbContext.Boards.Add(new Models.Board
+            {
+                Title = viewModel.Title
+            });
+
+            int effectedResultCount = dbContext.SaveChanges();
+            return effectedResultCount;
         }
 
         public BoardView GetBoard()

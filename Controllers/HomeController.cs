@@ -22,6 +22,21 @@ namespace Donatello2020.Controllers
             return View(model);
         }
 
-       
+        [HttpGet]
+        public IActionResult Create()
+        {
+            BoardList model = new BoardList() ;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Create(NewBoard viewModel)
+        {
+            var effectedResultCount = boardService.AddBoard(viewModel);
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

@@ -22,7 +22,7 @@ namespace Donatello2020
             services.AddScoped<BoardService>();
             services.AddControllersWithViews();
 
-            var connection = @"";
+            var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Donatello2020;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
             services.AddDbContext<Donatello2020Context>(options => 
             options.UseSqlServer(connection));
