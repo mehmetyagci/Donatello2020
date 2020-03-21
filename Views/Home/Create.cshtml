@@ -1,13 +1,14 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Donatello2020.ViewModels.NewBoard
 @{
     ViewData["Title"] = "Create";
 }
 
 <div class="container">
     <h2>Add a new Board</h2>
-    <form method="post">
+    <form method="post" asp-controller="Home" asp-action="Create">
         <label>Title</label>
-        <input type="text" name="title" />
+        <input asp-for="Title"  type="text" name="title"/>
         <input type="submit" class="btn" />
     </form>
 </div>

@@ -1,5 +1,6 @@
 ﻿using Donatello2020.Infrastructure;
 using Donatello2020.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +34,33 @@ namespace Donatello2020.Services
             {
                 model.Boards.Add(new BoardList.Board
                 {
+                    Id = board.Id,
                     Title = board.Title
                 });
             }
             return model;
+        }
+
+        public void AddCard(AddCard viewModel)
+        {
+            var board = dbContext.Boards
+                .Include(b => b.Columns)
+                .SingleOrDefault(x => x.Id == viewModel.Id);
+
+            var firstColumn = board.Columns.FirstOrDefault();
+            if(firstColumn == null)
+            {
+                firstColumn = new Models.Column{  Title = "Todo"};
+                board.Columns.Add(firstColumn);
+            }
+
+
+            firstColumn.Cards.Add(new Models.Card
+            {
+                Contents = viewModel.Contents
+            });
+
+            dbContext.SaveChanges();
         }
 
         internal int AddBoard(NewBoard viewModel)
@@ -50,25 +74,31 @@ namespace Donatello2020.Services
             return effectedResultCount;
         }
 
-        public BoardView GetBoard()
+        public BoardView GetBoard(int id)
         {
             var model = new BoardView();
-            var column = new BoardView.Column { Title = "ToDo" };
 
-            var card = new BoardView.Card
+            var board = dbContext.Boards
+                .Include(b => b.Columns)
+                .ThenInclude(c => c.Cards)
+                .SingleOrDefault(x => x.Id == id);
+
+            model.Id = board.Id;
+
+            foreach (var column in board.Columns)
             {
-                Content = "Here's a card"
-            };
+                var modelColumn = new BoardView.Column();
 
-            var card2 = new BoardView.Card
-            {
-                Content = "Here's another card"
-            };
+                modelColumn.Title = column.Title;
 
-            column.Cards.Add(card);
-            column.Cards.Add(card2);
-
-            model.Columns.Add(column);
+                foreach (var card in column.Cards)
+                {
+                    var modelCard = new BoardView.Card();
+                    modelCard.Content = card.Contents;
+                    modelColumn.Cards.Add(modelCard);
+                }
+                model.Columns.Add(modelColumn);
+            }
             return model;
         }
     }

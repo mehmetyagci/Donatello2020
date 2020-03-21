@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Donatello2020.ViewModels
 {
-    //public class Board
-    //{
-    //    public string Title { get; set; }
-    //}
+    public class WeeklySummary
+    {
+        public int Started { get; set; }
+        public int Finished { get; set; }
+    }
 }

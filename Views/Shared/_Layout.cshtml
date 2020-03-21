@@ -11,9 +11,32 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+    <!-- Validation on Client Side start -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Validation on Client Side start -->
+
+    <link href="/css/site.css" rel="stylesheet" />
+
 
 </head>
 <body>
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">Donatello 2020</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a asp-controller="Home" asp-action="Index">
+                        Boards
+                        Ah that's better, now we can actually get around our application a bit more easily...
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div>
         @RenderBody()
     </div>

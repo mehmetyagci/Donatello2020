@@ -10,6 +10,7 @@ namespace Donatello2020.ViewModels
         public List<Board> Boards { get; set; } = new List<Board>();
         public class Board
         {
+            public int Id { get; set; }
             public string Title { get; set; }
         }
 
