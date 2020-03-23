@@ -4,19 +4,26 @@
     ViewData["Title"] = "Details";
 }
 
-@if(TempData.ContainsKey("Message"))
+@if (TempData.ContainsKey("Message"))
 {
     <script type="text/javascript">
         M.toast({ html: '@TempData["Message"]' }, 3000);
     </script>
 }
 
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    });
+</script>
+
 <div class="container">
 
     <h2>Details</h2>
 
     <div class="row">
-        <form class="col s12" asp-controller="Card" asp-action="Update" method="post"> 
+        <form class="col s12" asp-controller="Card" asp-action="Update" method="post">
 
             <div class="row">
                 <div class="input-field col s12">
@@ -34,6 +41,13 @@
                               asp-for="Notes"
                               class="materialize-textarea"></textarea>
                     <label asp-for="Notes">@Model.Notes</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <select asp-for="Column" asp-items="Model.Columns"></select>
+                    <label asp-for="Column">Column</label>
                 </div>
             </div>
 

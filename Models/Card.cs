@@ -14,5 +14,9 @@ namespace Donatello2020.Models
 
         public string Notes { get; set; }
 
+        public int ColumnId { get; set; }
+
+        public Column Column { get; set; }
+
     }
 }

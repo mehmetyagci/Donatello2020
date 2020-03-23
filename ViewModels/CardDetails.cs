@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace Donatello2020.ViewModels
         public string Contents { get; set; }
 
         public string Notes { get; set; }
+
+        public int Column { get; set; }
+
+        public List<SelectListItem> Columns { get; set; } = new List<SelectListItem>();
 
     }
 }
