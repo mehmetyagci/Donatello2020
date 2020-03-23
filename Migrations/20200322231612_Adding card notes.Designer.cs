@@ -4,14 +4,16 @@ using Donatello2020.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Donatello2020.Migrations
 {
     [DbContext(typeof(Donatello2020Context))]
-    partial class Donatello2020ContextModelSnapshot : ModelSnapshot
+    [Migration("20200322231612_Adding card notes")]
+    partial class Addingcardnotes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

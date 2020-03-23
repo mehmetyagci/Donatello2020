@@ -21,6 +21,7 @@ namespace Donatello2020
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<BoardService>();
+            services.AddScoped<CardService>();
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

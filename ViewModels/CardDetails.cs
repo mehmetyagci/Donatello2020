@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Donatello2020.Models
+namespace Donatello2020.ViewModels
 {
-    [Table("Card")]
-    public class Card
+    public class CardDetails
     {
         public int Id { get; set; }
+
+        [Required]
         public string Contents { get; set; }
 
         public string Notes { get; set; }

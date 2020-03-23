@@ -94,6 +94,7 @@ namespace Donatello2020.Services
                 foreach (var card in column.Cards)
                 {
                     var modelCard = new BoardView.Card();
+                    modelCard.Id = card.Id;
                     modelCard.Content = card.Contents;
                     modelColumn.Cards.Add(modelCard);
                 }
