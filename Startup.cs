@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -16,6 +17,11 @@ namespace Donatello2020
 {
     public class Startup
     {
+        private readonly IConfiguration configuration; 
+        public Startup(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -27,7 +33,7 @@ namespace Donatello2020
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
-            var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Donatello2020;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            var connection = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<Donatello2020Context>(options => 
             options.UseSqlServer(connection));
