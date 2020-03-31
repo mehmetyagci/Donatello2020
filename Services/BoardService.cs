@@ -35,7 +35,8 @@ namespace Donatello2020.Services
                 model.Boards.Add(new BoardList.Board
                 {
                     Id = board.Id,
-                    Title = board.Title
+                    Title = board.Title,
+                    BackgroundColor = board.Color,
                 });
             }
             return model;
@@ -48,9 +49,9 @@ namespace Donatello2020.Services
                 .SingleOrDefault(x => x.Id == viewModel.Id);
 
             var firstColumn = board.Columns.FirstOrDefault();
-            if(firstColumn == null)
+            if (firstColumn == null)
             {
-                firstColumn = new Models.Column{  Title = "Todo"};
+                firstColumn = new Models.Column { Title = "Todo" };
                 board.Columns.Add(firstColumn);
             }
 
@@ -84,13 +85,15 @@ namespace Donatello2020.Services
                 .SingleOrDefault(x => x.Id == id);
 
             model.Id = board.Id;
+            model.Color = board.Color;
 
             foreach (var column in board.Columns)
             {
                 var modelColumn = new BoardView.Column();
 
+                modelColumn.Id = column.Id;
                 modelColumn.Title = column.Title;
-
+                
                 foreach (var card in column.Cards)
                 {
                     var modelCard = new BoardView.Card();
@@ -101,6 +104,20 @@ namespace Donatello2020.Services
                 model.Columns.Add(modelColumn);
             }
             return model;
+        }
+
+        public void Move(MoveCardCommand command)
+        {
+            var card = dbContext.Cards.SingleOrDefault(x => x.Id == command.CardId);
+            card.ColumnId = command.ColumnId;
+            dbContext.SaveChanges();
+        }
+
+        public void SetColor(SetColorCommand command)
+        {
+            var board = dbContext.Boards.SingleOrDefault(x => x.Id == command.BoardId);
+            board.Color = command.Color;
+            dbContext.SaveChanges();
         }
     }
 }

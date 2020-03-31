@@ -26,7 +26,7 @@ namespace Donatello2020.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            BoardList model = new BoardList() ;
+            var model = new NewBoard() ;
 
             return View(model);
         }

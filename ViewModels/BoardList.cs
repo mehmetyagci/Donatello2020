@@ -12,7 +12,7 @@ namespace Donatello2020.ViewModels
         {
             public int Id { get; set; }
             public string Title { get; set; }
+            public string BackgroundColor { get; set; }
         }
-
     }
 }
