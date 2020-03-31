@@ -3,14 +3,16 @@ using Donatello2020.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Donatello2020.Migrations
 {
     [DbContext(typeof(Donatello2020Context))]
-    partial class Donatello2020ContextModelSnapshot : ModelSnapshot
+    [Migration("20200331152050_emailadressadded")]
+    partial class emailadressadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace Donatello2020.Migrations
 
                     b.HasIndex("BoardId");
 
-                    b.ToTable("Column");
+                    b.ToTable("Columns");
                 });
 
             modelBuilder.Entity("Donatello2020.Models.Card", b =>

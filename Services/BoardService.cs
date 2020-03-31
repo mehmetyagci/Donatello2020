@@ -1,9 +1,13 @@
-﻿using Donatello2020.Infrastructure;
+﻿using Donatello2020.Helpers;
+using Donatello2020.Infrastructure;
+using Donatello2020.Models;
 using Donatello2020.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Donatello2020.Services
@@ -11,9 +15,11 @@ namespace Donatello2020.Services
     public class BoardService
     {
         private readonly Donatello2020Context dbContext;
-        public BoardService(Donatello2020Context dbContext)
+        private readonly Emails emails;
+        public BoardService(Donatello2020Context dbContext, Emails emails)
         {
             this.dbContext = dbContext;
+            this.emails = emails;
         }
 
         public BoardList ListBoard()
@@ -64,6 +70,24 @@ namespace Donatello2020.Services
             dbContext.SaveChanges();
         }
 
+        public NotificationSettings GetNotificationPreferences(int boardId, int columnId)
+        {
+            var column = dbContext.Columns.SingleOrDefault(x => x.Id == columnId);
+            return new NotificationSettings
+            {
+                BoardId = boardId,
+                ColumnId = columnId,
+                EmailAddress = column.NotificationEmail
+            };
+        }
+
+        public void SaveNotificationPreferences(NotificationSettings viewModel)
+        {
+            var column = dbContext.Columns.SingleOrDefault(x => x.Id == viewModel.ColumnId);
+            column.NotificationEmail = viewModel.EmailAddress;
+            dbContext.SaveChanges();
+        }
+
         internal int AddBoard(NewBoard viewModel)
         {
             dbContext.Boards.Add(new Models.Board
@@ -93,7 +117,7 @@ namespace Donatello2020.Services
 
                 modelColumn.Id = column.Id;
                 modelColumn.Title = column.Title;
-                
+
                 foreach (var card in column.Cards)
                 {
                     var modelCard = new BoardView.Card();
@@ -111,7 +135,13 @@ namespace Donatello2020.Services
             var card = dbContext.Cards.SingleOrDefault(x => x.Id == command.CardId);
             card.ColumnId = command.ColumnId;
             dbContext.SaveChanges();
+
+            var column = dbContext.Columns.SingleOrDefault(x => x.Id == command.ColumnId);
+
+            emails.SendCardMovedNotification(card, column);
         }
+
+      
 
         public void SetColor(SetColorCommand command)
         {

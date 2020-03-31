@@ -16,5 +16,6 @@ namespace Donatello2020.Infrastructure
 
         public DbSet<Board> Boards { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Column> Columns { get; set; }
     }
 }

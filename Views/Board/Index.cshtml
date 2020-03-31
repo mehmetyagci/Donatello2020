@@ -6,7 +6,6 @@
 }
 
 <script>
-
     @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
     @functions {
         public string GetAntiXsrfRequestToken()
@@ -22,6 +21,7 @@
         $('.column').droppable({
             accept: '.draggable',
             drop: function (event, ui) {
+                debugger;
                 var dropped = ui.draggable;
                 var droppedOn = $(this);
                 $(dropped).detach().css({ top: 0, left: 0 }).appendTo(droppedOn);
@@ -80,13 +80,13 @@ request.setRequestHeader(
     <div class="row">
         <div class="col s10">
             @*@if (Model.Columns.Count > 0)
-            {*@
-                <a asp-controller="Board"
-                   asp-action="AddCard"
-                   asp-route-id="@Model.Id"
-                   class="waves-effect waves-light btn">
-                    Add Card
-                </a>
+                {*@
+            <a asp-controller="Board"
+               asp-action="AddCard"
+               asp-route-id="@Model.Id"
+               class="waves-effect waves-light btn">
+                Add Card
+            </a>
             @*}*@
         </div>
 
@@ -106,7 +106,15 @@ request.setRequestHeader(
         @foreach (var column in Model.Columns)
         {
             <div class="col m2">
-                <h3>@column.Title</h3>
+                <h3>
+                    @column.Title
+                    <a asp-controller="Board"
+                       asp-action="Notifications"
+                       asp-route-boardId="@Model.Id"
+                       asp-route-columnId="@column.Id">
+                        <i class="material-icons">settings</i>
+                    </a>
+                </h3>
 
                 <div class="column" style="min-height: 600px" id="@column.Id">
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Donatello2020.Helpers;
 using Donatello2020.Infrastructure;
 using Donatello2020.Services;
 using Microsoft.AspNetCore.Builder;
@@ -28,9 +29,11 @@ namespace Donatello2020
         {
             services.AddScoped<BoardService>();
             services.AddScoped<CardService>();
+            services.AddScoped<Emails>();
+
             services.AddControllersWithViews(options =>
             {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
             var connection = configuration.GetConnectionString("DefaultConnection");
