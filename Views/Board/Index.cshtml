@@ -75,7 +75,57 @@ request.setRequestHeader(
 
 </script>
 
+<script>
+    //$(function () {
+    //    var title = document.getElementsByName("title")[0];
+    //    title.onblur = function (e) {
+    //        console.log(title.innerText);
+    //        alert(title.innerText);
+    //    }
+    //});
+
+    $(function () {
+        var title = document.getElementsByName("title")[0];
+        console.log("title1-title:" + title);
+
+        title.onkeydown = function (e) {
+
+            console.log("title2-onkeypress e.which:" + e.which);
+
+            if (e.which === 13) {
+                console.log("title2-enter blocked");
+                e.preventDefault();
+                title.blur();
+            }
+        };
+
+        title.onblur = function (e) {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "/api/Board/setTitle",
+                beforeSend: function (request) {
+                    request.setRequestHeader("RequestVerificationToken",
+                        $('#RequestVerificationToken').val());
+                },
+                data: JSON.stringify({ title: title.innerText, boardId: $('#BoardId').val() }),
+            });
+        }
+    });
+</script>
+
 <div class="container">
+
+    <div class="row" style="line-height: 4em; border-bottom: 1px solid #cccccc;">
+        <div class="col s6">
+            <span contenteditable="true" name="title" style="font-size: 1.8em">@Model.Title</span>
+        </div>
+        <div class="col s6">
+            <input type="hidden" id="BoardId" value="@Model.Id" />
+            <input type="color" id="BoardColor" /> Board Color
+        </div>
+    </div>
 
     <div class="row">
         <div class="col s10">

@@ -31,5 +31,12 @@ namespace Donatello2020.Controllers.Api
             this.boardService.SetColor(command);
             return Ok(new { changed = true });
         }
+
+        [HttpPost("setTitle")]
+        public IActionResult SetTitle([FromBody] SetTitleCommand command)
+        {
+            this.boardService.SetTitle(command);
+            return Ok(new { changed = true });
+        }
     }
 }

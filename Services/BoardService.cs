@@ -48,6 +48,13 @@ namespace Donatello2020.Services
             return model;
         }
 
+        public void SetTitle(SetTitleCommand command)
+        {
+            var board = dbContext.Boards.SingleOrDefault(x => x.Id == command.BoardId);
+            board.Title = command.Title;
+            dbContext.SaveChanges(); 
+        }
+
         public void AddCard(AddCard viewModel)
         {
             var board = dbContext.Boards
@@ -109,6 +116,7 @@ namespace Donatello2020.Services
                 .SingleOrDefault(x => x.Id == id);
 
             model.Id = board.Id;
+            model.Title = board.Title;
             model.Color = board.Color;
 
             foreach (var column in board.Columns)
